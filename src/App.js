@@ -10,6 +10,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Avatar from "@mui/material/Avatar";
+import meProfile from "../src/images/me-pp.jpg";
+import jonnyProfile from "../src/images/jonny-pp.jpg";
+import shandogProfile from "../src/images/shandog-pp.jpg";
 
 function App() {
   const [standings, setStandings] = useState([]);
@@ -73,7 +76,7 @@ function App() {
             <div>
               <Avatar
                 alt="Dan Higgins"
-                src="/me-pp.jpg"
+                src={meProfile}
                 sx={{ width: 90, height: 90 }}
               />
               <p>{`${
@@ -85,7 +88,7 @@ function App() {
             <div>
               <Avatar
                 alt="Jonny Constantine"
-                src="/jonny-pp.jpg"
+                src={jonnyProfile}
                 sx={{ width: 90, height: 90 }}
               />
               <p>{`${
@@ -97,7 +100,7 @@ function App() {
             <div>
               <Avatar
                 alt="George Shannon"
-                src="/shandog-pp.jpg"
+                src={shandogProfile}
                 sx={{ width: 90, height: 90 }}
               />
               <p>{`${
