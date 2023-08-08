@@ -15,6 +15,7 @@ import users from "../utils/users";
 
 function App() {
   const [standings, setStandings] = useState([]);
+  const [totalGoals, setTotalGoals] = useState(null);
   const [sortedResults, setSortedResults] = useState([]);
 
   const getStandings = async () => {
@@ -50,15 +51,39 @@ function App() {
         }
         score = score - 1;
       });
-      scores.push({ name: user.name, score: score, profile: user.profile });
+      scores.push({
+        name: user.name,
+        score: score,
+        profile: user.profile,
+        goals: user.goals,
+      });
     });
 
     return scores;
   };
 
+  const calculateTotalGoals = () => {
+    let totalGoals = 0;
+
+    standings.forEach((team) => {
+      totalGoals += team.stats.goalsFor;
+    });
+
+    return totalGoals;
+  };
+
   useEffect(() => {
     if (standings.length > 0) {
-      setSortedResults(calculateScores().sort((a, b) => b.score - a.score));
+      setSortedResults(
+        calculateScores().sort((a, b) => {
+          if (b.score === a.score) {
+            return totalGoals - b.goals - (totalGoals - a.goals);
+          }
+          return b.score - a.score;
+        })
+      );
+
+      setTotalGoals(calculateTotalGoals());
     }
   }, [standings]);
 
@@ -129,6 +154,12 @@ function App() {
                   >
                     Points
                   </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ color: "#340040", fontWeight: "bold" }}
+                  >
+                    xG
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -160,6 +191,9 @@ function App() {
                     </TableCell>
                     <TableCell align="center" sx={{ color: "#340040" }}>
                       {result.score}
+                    </TableCell>
+                    <TableCell align="center" sx={{ color: "#340040" }}>
+                      {result.goals.toLocaleString()}
                     </TableCell>
                   </TableRow>
                 ))}
