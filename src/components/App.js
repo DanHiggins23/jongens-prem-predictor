@@ -90,7 +90,7 @@ function App() {
               }
               sx={{ width: 120, height: 120 }}
             />
-            <p>💷💷💷💷💷</p>
+            <p>😢💷</p>
           </div>
         </div>
       </>
