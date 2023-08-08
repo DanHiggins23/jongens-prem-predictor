@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/jongens-prem-predictor/static/css/main.38737c8e.css",
+    "main.css": "/jongens-prem-predictor/static/css/main.250fa32c.css",
     "main.js": "/jongens-prem-predictor/static/js/main.3473dac6.js",
     "static/media/me-pp.jpg": "/jongens-prem-predictor/static/media/me-pp.ef55202f1c7ccada95a6.jpg",
     "static/media/zach-pp.jpg": "/jongens-prem-predictor/static/media/zach-pp.212781cff6c5dab85d69.jpg",
@@ -8,11 +8,11 @@
     "static/media/jonny-pp.jpg": "/jongens-prem-predictor/static/media/jonny-pp.ca8f8a89b3dd2952b428.jpg",
     "static/media/shandog-pp.jpg": "/jongens-prem-predictor/static/media/shandog-pp.e050a8c533745c4062d6.jpg",
     "index.html": "/jongens-prem-predictor/index.html",
-    "main.38737c8e.css.map": "/jongens-prem-predictor/static/css/main.38737c8e.css.map",
+    "main.250fa32c.css.map": "/jongens-prem-predictor/static/css/main.250fa32c.css.map",
     "main.3473dac6.js.map": "/jongens-prem-predictor/static/js/main.3473dac6.js.map"
   },
   "entrypoints": [
-    "static/css/main.38737c8e.css",
+    "static/css/main.250fa32c.css",
     "static/js/main.3473dac6.js"
   ]
 }
