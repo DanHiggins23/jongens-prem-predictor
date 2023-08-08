@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/jongens-prem-predictor/static/css/main.e9ffc720.css",
-    "main.js": "/jongens-prem-predictor/static/js/main.c1dd2967.js",
-    "static/js/787.8cf167cf.chunk.js": "/jongens-prem-predictor/static/js/787.8cf167cf.chunk.js",
+    "main.css": "/jongens-prem-predictor/static/css/main.38737c8e.css",
+    "main.js": "/jongens-prem-predictor/static/js/main.3473dac6.js",
     "static/media/me-pp.jpg": "/jongens-prem-predictor/static/media/me-pp.ef55202f1c7ccada95a6.jpg",
+    "static/media/zach-pp.jpg": "/jongens-prem-predictor/static/media/zach-pp.212781cff6c5dab85d69.jpg",
+    "static/media/dc-pp.jpg": "/jongens-prem-predictor/static/media/dc-pp.0dd6be576c6f44e02aac.jpg",
     "static/media/jonny-pp.jpg": "/jongens-prem-predictor/static/media/jonny-pp.ca8f8a89b3dd2952b428.jpg",
     "static/media/shandog-pp.jpg": "/jongens-prem-predictor/static/media/shandog-pp.e050a8c533745c4062d6.jpg",
     "index.html": "/jongens-prem-predictor/index.html",
-    "main.e9ffc720.css.map": "/jongens-prem-predictor/static/css/main.e9ffc720.css.map",
-    "main.c1dd2967.js.map": "/jongens-prem-predictor/static/js/main.c1dd2967.js.map",
-    "787.8cf167cf.chunk.js.map": "/jongens-prem-predictor/static/js/787.8cf167cf.chunk.js.map"
+    "main.38737c8e.css.map": "/jongens-prem-predictor/static/css/main.38737c8e.css.map",
+    "main.3473dac6.js.map": "/jongens-prem-predictor/static/js/main.3473dac6.js.map"
   },
   "entrypoints": [
-    "static/css/main.e9ffc720.css",
-    "static/js/main.c1dd2967.js"
+    "static/css/main.38737c8e.css",
+    "static/js/main.3473dac6.js"
   ]
 }
