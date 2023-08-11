@@ -43,14 +43,19 @@ function App() {
   const calculateScores = () => {
     const scores = [];
 
-    users.forEach((user, userIndex) => {
+    users.forEach((user) => {
       let score = 0;
-      standings.forEach((standing, standingIndex) => {
-        if (standing.team.name === user.predictions[standingIndex]) {
-          score = score + 5;
-        }
-        score = score - 1;
+
+      user.predictions.forEach((prediction, predictionIndex) => {
+        const predictedPos = predictionIndex + 1;
+
+        const actualPos = standings.find(
+          (standing) => standing.team.name === prediction
+        ).stats.rank;
+
+        score = score + Math.abs(actualPos - predictedPos);
       });
+
       scores.push({
         name: user.name,
         score: score,
@@ -76,10 +81,10 @@ function App() {
     if (standings.length > 0) {
       setSortedResults(
         calculateScores().sort((a, b) => {
-          if (b.score === a.score) {
+          if (a.score === b.score) {
             return totalGoals - b.goals - (totalGoals - a.goals);
           }
-          return b.score - a.score;
+          return a.score - b.score;
         })
       );
 
