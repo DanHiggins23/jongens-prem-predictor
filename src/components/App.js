@@ -82,7 +82,9 @@ function App() {
       setSortedResults(
         calculateScores().sort((a, b) => {
           if (a.score === b.score) {
-            return totalGoals - b.goals - (totalGoals - a.goals);
+            return (
+              Math.abs(totalGoals - a.goals) - Math.abs(totalGoals - b.goals)
+            );
           }
           return a.score - b.score;
         })
