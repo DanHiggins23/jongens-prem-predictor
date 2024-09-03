@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/jongens-prem-predictor/static/css/main.250fa32c.css",
-    "main.js": "/jongens-prem-predictor/static/js/main.976013a1.js",
+    "main.js": "/jongens-prem-predictor/static/js/main.97fc400a.js",
     "static/media/imran-pp.png": "/jongens-prem-predictor/static/media/imran-pp.6b1385ae80571b0926a9.png",
     "static/media/me-pp.jpg": "/jongens-prem-predictor/static/media/me-pp.ef55202f1c7ccada95a6.jpg",
     "static/media/zach-pp.jpg": "/jongens-prem-predictor/static/media/zach-pp.212781cff6c5dab85d69.jpg",
@@ -10,10 +10,10 @@
     "static/media/shandog-pp.jpg": "/jongens-prem-predictor/static/media/shandog-pp.e050a8c533745c4062d6.jpg",
     "index.html": "/jongens-prem-predictor/index.html",
     "main.250fa32c.css.map": "/jongens-prem-predictor/static/css/main.250fa32c.css.map",
-    "main.976013a1.js.map": "/jongens-prem-predictor/static/js/main.976013a1.js.map"
+    "main.97fc400a.js.map": "/jongens-prem-predictor/static/js/main.97fc400a.js.map"
   },
   "entrypoints": [
     "static/css/main.250fa32c.css",
-    "static/js/main.976013a1.js"
+    "static/js/main.97fc400a.js"
   ]
 }
