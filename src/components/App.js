@@ -17,6 +17,7 @@ function App() {
   const [standings, setStandings] = useState([]);
   const [totalGoals, setTotalGoals] = useState(null);
   const [sortedResults, setSortedResults] = useState([]);
+  const [predictionsToShow, setPredictionsToShow] = useState([]);
 
   const getStandings = async () => {
     const response = await axios.get(
@@ -167,10 +168,17 @@ function App() {
                   >
                     xG
                   </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ color: "#340040", fontWeight: "bold" }}
+                  >
+                    Predictions
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {sortedResults.map((result, index) => (
+                  <>
                   <TableRow>
                     <TableCell
                       align="left"
@@ -202,7 +210,19 @@ function App() {
                     <TableCell align="center" sx={{ color: "#340040" }}>
                       {result.goals.toLocaleString()}
                     </TableCell>
+                    <TableCell align="center" sx={{ color: "#340040" }}>
+                      <Button onClick={() => predictionsToShow.find((prediction) => prediction.name === result.name) ? setPredictionsToShow(predictionsToShow.filter((prediction) => prediction.name !== result.name)) : setPredictionsToShow([...predictionsToShow, users.find((user) => user.name === result.name)])}>{predictionsToShow.find((prediction) => prediction.name === result.name) ? 'Hide' : 'View'}</Button>
+                    </TableCell>
                   </TableRow>
+
+                  {predictionsToShow.length > 0 && predictionsToShow.find((prediction) => prediction.name === result.name) && predictionsToShow.find((prediction) => prediction.name === result.name).predictions.map((prediction, index) => (
+                    <TableRow>
+                      <TableCell align="center" sx={{ color: "#340040", fontWeight: 'bold' }} colSpan={5}>
+                        {`${index + 1}: ${prediction}`}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </>
                 ))}
               </TableBody>
             </Table>
