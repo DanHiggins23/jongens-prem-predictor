@@ -20,7 +20,7 @@ function App() {
 
   const getStandings = async () => {
     const response = await axios.get(
-      "https://premier-league-standings1.p.rapidapi.com/?season=2023",
+      "https://premier-league-standings1.p.rapidapi.com/?season=2024",
       {
         headers: {
           "X-RapidAPI-Key":
