@@ -1,6 +1,4 @@
 import axios from "axios";
-import "./App.scss";
-import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,14 +8,97 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Avatar from "@mui/material/Avatar";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import IconButton from "@mui/material/IconButton";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
+import {
+  useSortable,
+  SortableContext,
+  defaultAnimateLayoutChanges,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { useEffect, useState } from "react";
+
 import defaultProfile from "../../src/images/default-pp.jpg";
 import users from "../utils/users";
+import "./App.scss";
+import Icon from "@mui/material/Icon";
 
-function App() {
+const DraggableRow = ({ team, position, styleOverride }) => {
+  const animateLayoutChanges = (args) => {
+    const { isSorting, wasSorting, transform, index } = args;
+
+    if (isSorting || wasSorting) {
+      return defaultAnimateLayoutChanges(args);
+    }
+
+    return true;
+  };
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    animateLayoutChanges,
+    id: team.team.name, // Use the team name as a unique ID
+  });
+
+  const style = {
+    transition,
+    transform: CSS.Translate.toString(transform),
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <TableRow
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      key={team.team.name}
+    >
+      <TableCell align="center" sx={{ color: "#340040", fontWeight: "bold" }}>
+        {/* <DragIndicatorIcon /> */}
+        {position + 1}
+      </TableCell>
+      <TableCell align="left" sx={{ color: "#340040" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <span style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+            <img src={team.team.logo} width="30px" alt="Prem team logo" />
+            {team.team.name}
+          </span>
+          <span>
+            <IconButton>
+              <DragIndicatorIcon />
+            </IconButton>
+          </span>
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+};
+
+const App = () => {
   const [standings, setStandings] = useState([]);
   const [totalGoals, setTotalGoals] = useState(null);
   const [sortedResults, setSortedResults] = useState([]);
   const [predictionsToShow, setPredictionsToShow] = useState([]);
+  const [showLeagueTable, setShowLeagueTable] = useState(false);
+
+  const [currentPrediction, setCurrentPrediction] = useState([]);
+  const [currentDraggedItem, setCurrentDraggedItem] = useState(null);
 
   const getStandings = async () => {
     const response = await axios.get(
@@ -37,6 +118,9 @@ function App() {
     getStandings()
       .then((response) => {
         setStandings(response);
+        setCurrentPrediction(
+          response.sort((a, b) => a.team.name.localeCompare(b.team.name))
+        );
       })
       .catch((error) => console.log(error));
   };
@@ -98,7 +182,7 @@ function App() {
   return (
     <div className="App">
       <>
-        <h1>Jongens Op Tournee: Prem Predictor</h1>
+        <h1>Prem Predictor</h1>
 
         <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
           <div>
@@ -140,7 +224,15 @@ function App() {
         <>
           <h2>Scores on the doors</h2>
 
-          <TableContainer component={Paper}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              width: "90%",
+              margin: "auto",
+              borderRadius: "20px",
+              padding: "10px",
+            }}
+          >
             <Table>
               <TableHead>
                 <TableRow>
@@ -154,7 +246,7 @@ function App() {
                     align="left"
                     sx={{ color: "#340040", fontWeight: "bold" }}
                   >
-                    Jongen
+                    Name
                   </TableCell>
                   <TableCell
                     align="center"
@@ -179,50 +271,84 @@ function App() {
               <TableBody>
                 {sortedResults.map((result, index) => (
                   <>
-                  <TableRow>
-                    <TableCell
-                      align="left"
-                      sx={{ color: "#340040", fontWeight: "bold" }}
-                    >
-                      {index + 1}
-                    </TableCell>
-                    <TableCell align="left" sx={{ color: "#340040" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "15px",
-                        }}
-                      >
-                        <img
-                          src={result.profile}
-                          width="30px"
-                          height="30px"
-                          alt="Jongen"
-                          style={{ borderRadius: "50px" }}
-                        />
-                        {result.name}
-                      </div>
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#340040" }}>
-                      {result.score}
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#340040" }}>
-                      {result.goals.toLocaleString()}
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#340040" }}>
-                      <Button onClick={() => predictionsToShow.find((prediction) => prediction.name === result.name) ? setPredictionsToShow(predictionsToShow.filter((prediction) => prediction.name !== result.name)) : setPredictionsToShow([...predictionsToShow, users.find((user) => user.name === result.name)])}>{predictionsToShow.find((prediction) => prediction.name === result.name) ? 'Hide' : 'View'}</Button>
-                    </TableCell>
-                  </TableRow>
-
-                  {predictionsToShow.length > 0 && predictionsToShow.find((prediction) => prediction.name === result.name) && predictionsToShow.find((prediction) => prediction.name === result.name).predictions.map((prediction, index) => (
                     <TableRow>
-                      <TableCell align="center" sx={{ color: "#340040", fontWeight: 'bold' }} colSpan={5}>
-                        {`${index + 1}: ${prediction}`}
+                      <TableCell
+                        align="left"
+                        sx={{ color: "#340040", fontWeight: "bold" }}
+                      >
+                        {index + 1}
+                      </TableCell>
+                      <TableCell align="left" sx={{ color: "#340040" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "15px",
+                          }}
+                        >
+                          <img
+                            src={result.profile}
+                            width="30px"
+                            height="30px"
+                            alt="Jongen"
+                            style={{ borderRadius: "50px" }}
+                          />
+                          {result.name}
+                        </div>
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: "#340040" }}>
+                        {result.score}
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: "#340040" }}>
+                        {result.goals.toLocaleString()}
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: "#340040" }}>
+                        <Button
+                          onClick={() =>
+                            predictionsToShow.find(
+                              (prediction) => prediction.name === result.name
+                            )
+                              ? setPredictionsToShow(
+                                  predictionsToShow.filter(
+                                    (prediction) =>
+                                      prediction.name !== result.name
+                                  )
+                                )
+                              : setPredictionsToShow([
+                                  ...predictionsToShow,
+                                  users.find(
+                                    (user) => user.name === result.name
+                                  ),
+                                ])
+                          }
+                        >
+                          {predictionsToShow.find(
+                            (prediction) => prediction.name === result.name
+                          )
+                            ? "Hide"
+                            : "View"}
+                        </Button>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </>
+
+                    {predictionsToShow.length > 0 &&
+                      predictionsToShow.find(
+                        (prediction) => prediction.name === result.name
+                      ) &&
+                      predictionsToShow
+                        .find((prediction) => prediction.name === result.name)
+                        .predictions.map((prediction, index) => (
+                          <TableRow>
+                            <TableCell
+                              align="center"
+                              sx={{ color: "#340040", fontWeight: "bold" }}
+                              colSpan={5}
+                            >
+                              {`${index + 1}: ${prediction}`}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                  </>
                 ))}
               </TableBody>
             </Table>
@@ -230,89 +356,252 @@ function App() {
         </>
       )}
 
-      {standings.length > 0 && (
+      {currentPrediction.length > 0 && (
         <>
-          <h2>League table</h2>
+          <h2>Prediction</h2>
 
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    align="center"
-                    sx={{ color: "#340040", fontWeight: "bold" }}
-                  >
-                    Pos
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{ color: "#340040", fontWeight: "bold" }}
-                  >
-                    Club
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ color: "#340040", fontWeight: "bold" }}
-                  >
-                    Pld
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ color: "#340040", fontWeight: "bold" }}
-                  >
-                    GD
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ color: "#340040", fontWeight: "bold" }}
-                  >
-                    Pts
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {standings.map((team) => (
+          <DndContext
+            onDragStart={(event) => {
+              const selectedIndex = event.active.data?.current.sortable.index;
+              setCurrentDraggedItem({
+                name: event.active.id,
+                logo: currentPrediction[selectedIndex].team.logo,
+                position: selectedIndex,
+              });
+            }}
+            onDragEnd={(event) => {
+              const { active, over } = event;
+              if (over && active.id !== over.id) {
+                const activeIndex = currentPrediction.findIndex(
+                  (standing) => standing.team.name === active.id
+                );
+                const overIndex = currentPrediction.findIndex(
+                  (standing) => standing.team.name === over.id
+                );
+
+                if (activeIndex !== overIndex) {
+                  const newItems = arrayMove(
+                    currentPrediction,
+                    activeIndex,
+                    overIndex
+                  );
+                  setCurrentPrediction(newItems);
+                }
+                setCurrentDraggedItem(null);
+              }
+            }}
+          >
+            <SortableContext
+              items={currentPrediction.map(
+                (prediction) => prediction.team.name
+              )}
+              strategy={verticalListSortingStrategy}
+            >
+              <TableContainer
+                component={Paper}
+                sx={{
+                  width: "90%",
+                  margin: "auto",
+                  borderRadius: "20px",
+                  padding: "10px",
+                }}
+              >
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        sx={{ color: "#340040", fontWeight: "bold" }}
+                      >
+                        Pos
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        sx={{ color: "#340040", fontWeight: "bold" }}
+                      >
+                        Club
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {currentPrediction.map((team, index) => (
+                      <DraggableRow team={team} position={index} />
+                    ))}
+                    <DragOverlay
+                      style={{
+                        background: "white",
+                        width: "90%",
+                        borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                        borderTop: "1px solid rgba(224, 224, 224, 1)",
+                      }}
+                    >
+                      {currentDraggedItem && (
+                        <div
+                          style={{
+                            width: "100%",
+                            background: "white",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <span
+                            style={{
+                              padding: "16px",
+                              width: "14%",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              gap: "15px",
+                            }}
+                          >
+                            {/* <DragIndicatorIcon /> */}
+                            {currentDraggedItem?.position + 1}
+                          </span>
+                          <span
+                            style={{
+                              padding: "16px",
+                              width: "86%",
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              gap: "15px",
+                            }}
+                          >
+                            <span
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "15px",
+                              }}
+                            >
+                              <img
+                                src={currentDraggedItem?.logo}
+                                width="30px"
+                                alt="Prem team logo"
+                              />
+                              {currentDraggedItem?.name}
+                            </span>
+                            <IconButton onClick={() => console.log("hitting")}>
+                              <DragIndicatorIcon />
+                            </IconButton>
+                          </span>
+                        </div>
+                      )}
+                    </DragOverlay>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </SortableContext>
+          </DndContext>
+
+          <Button
+            variant="contained"
+            onClick={() => console.log("submitting")}
+            sx={{ backgroundColor: "#F2055C", margin: "20px" }}
+          >
+            {"Submit prediction"}
+          </Button>
+        </>
+      )}
+
+      {standings.length > 0 && (
+        <div>
+          <Button
+            onClick={() => setShowLeagueTable((prev) => !prev)}
+            variant="text"
+          >
+            {showLeagueTable ? "Hide league table" : "Show league table"}
+          </Button>
+
+          {showLeagueTable && (
+            <TableContainer
+              component={Paper}
+              sx={{
+                width: "90%",
+                margin: "auto",
+                borderRadius: "20px",
+                padding: "10px",
+              }}
+            >
+              <Table>
+                <TableHead>
                   <TableRow>
                     <TableCell
                       align="center"
                       sx={{ color: "#340040", fontWeight: "bold" }}
                     >
-                      {team.stats.rank}
+                      Pos
                     </TableCell>
-                    <TableCell align="left" sx={{ color: "#340040" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "15px",
-                        }}
-                      >
-                        <img
-                          src={team.team.logo}
-                          width="30px"
-                          alt="Prem team logo"
-                        />
-                        {team.team.name}
-                      </div>
+                    <TableCell
+                      align="left"
+                      sx={{ color: "#340040", fontWeight: "bold" }}
+                    >
+                      Club
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "#340040" }}>
-                      {team.stats.gamesPlayed}
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#340040", fontWeight: "bold" }}
+                    >
+                      Pld
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "#340040" }}>
-                      {team.stats.goalDifference}
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#340040", fontWeight: "bold" }}
+                    >
+                      GD
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "#340040" }}>
-                      {team.stats.points}
+                    <TableCell
+                      align="center"
+                      sx={{ color: "#340040", fontWeight: "bold" }}
+                    >
+                      Pts
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
+                </TableHead>
+                <TableBody>
+                  {standings.map((team) => (
+                    <TableRow>
+                      <TableCell
+                        align="center"
+                        sx={{ color: "#340040", fontWeight: "bold" }}
+                      >
+                        {team.stats.rank}
+                      </TableCell>
+                      <TableCell align="left" sx={{ color: "#340040" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "15px",
+                          }}
+                        >
+                          <img
+                            src={team.team.logo}
+                            width="30px"
+                            alt="Prem team logo"
+                          />
+                          {team.team.name}
+                        </div>
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: "#340040" }}>
+                        {team.stats.gamesPlayed}
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: "#340040" }}>
+                        {team.stats.goalDifference}
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: "#340040" }}>
+                        {team.stats.points}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </div>
       )}
     </div>
   );
-}
+};
 
 export default App;
