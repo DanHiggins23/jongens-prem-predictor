@@ -24,6 +24,7 @@ import { generateClient } from "aws-amplify/data";
 
 import defaultProfile from "../../src/images/default-pp.jpg";
 import users from "../utils/users";
+import mockStandings from "../utils/mockStandings";
 import "./App.scss";
 
 const client = generateClient();
@@ -93,18 +94,22 @@ const DraggableRow = ({ team, position, styleOverride }) => {
 };
 
 const App = () => {
-  const [standings, setStandings] = useState([]);
+  const [standings, setStandings] = useState(mockStandings);
   const [totalGoals, setTotalGoals] = useState(null);
   const [sortedResults, setSortedResults] = useState([]);
   const [predictionsToShow, setPredictionsToShow] = useState([]);
   const [showLeagueTable, setShowLeagueTable] = useState(false);
 
-  const [currentPrediction, setCurrentPrediction] = useState([]);
+  const [currentPrediction, setCurrentPrediction] = useState(
+    [...mockStandings].sort((a, b) => a.team.name.localeCompare(b.team.name))
+  );
   const [currentDraggedItem, setCurrentDraggedItem] = useState(null);
 
   const user = 1;
 
-  const [todos, setTodos] = useState([]);
+  const [predictions, setPredictions] = useState([]);
+
+  console.log(predictions);
 
   const getStandings = async () => {
     const response = await axios.get(
@@ -120,16 +125,17 @@ const App = () => {
     return response.data;
   };
 
-  const requestStandings = () => {
-    getStandings()
-      .then((response) => {
-        setStandings(response);
-        setCurrentPrediction(
-          response.sort((a, b) => a.team.name.localeCompare(b.team.name))
-        );
-      })
-      .catch((error) => console.log(error));
-  };
+  // Add back in once removed mocks
+  // const requestStandings = () => {
+  //   getStandings()
+  //     .then((response) => {
+  //       setStandings(response);
+  //       setCurrentPrediction(
+  //         response.sort((a, b) => a.team.name.localeCompare(b.team.name))
+  //       );
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   const calculateScores = () => {
     const scores = [];
@@ -169,22 +175,17 @@ const App = () => {
   };
 
   const createPrediction = () => {
-    client.models.Todo.create({
-      content: JSON.stringify({
-        user: 1,
-        prediction: currentPrediction.map((prediction) => prediction.team.name),
-      }),
+    client.models.Predictions.create({
+      user: 1,
+      prediction: JSON.stringify(
+        currentPrediction.map((prediction) => prediction.team.name)
+      ),
     });
   };
 
-  const deletePrediction = (id) => {
-    console.log(id);
-    client.models.Todo.delete({ id });
-  };
-
   useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
+    client.models.Predictions.observeQuery().subscribe({
+      next: (data) => setPredictions([...data.items]),
     });
   }, []);
 
@@ -238,13 +239,14 @@ const App = () => {
         </div>
       </>
 
-      <Button
+      {/* TODO: Add back in if required - mocking for now to save requests */}
+      {/* <Button
         variant="contained"
         onClick={() => requestStandings()}
         sx={{ backgroundColor: "#F2055C", marginBottom: "20px" }}
       >
         {standings.length > 0 ? "Update score" : "Calculate score"}
-      </Button>
+      </Button> */}
 
       {sortedResults.length > 0 && (
         <>
@@ -529,12 +531,6 @@ const App = () => {
           </Button>
         </>
       )}
-
-      {todos.map((todo) => (
-        <button onClick={() => deletePrediction(todo.id)}>
-          {todo.content}
-        </button>
-      ))}
 
       {standings.length > 0 && (
         <div>
