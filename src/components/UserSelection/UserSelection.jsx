@@ -24,7 +24,14 @@ const UserSelection = ({ users, selectedUser, setSelectedUser }) => {
       </div>
 
       {/* TODO: Convert below into a table for better styling? */}
-      <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '20px',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}
+      >
         {usersToDisplay.map((user) => (
           <IconButton
             onClick={() => setSelectedUser(user.user)}
@@ -34,6 +41,7 @@ const UserSelection = ({ users, selectedUser, setSelectedUser }) => {
               color: 'white',
               fontSize: '18px',
             }}
+            key={user.user}
           >
             <Avatar
               src={mapUserToProfile[user.user]}

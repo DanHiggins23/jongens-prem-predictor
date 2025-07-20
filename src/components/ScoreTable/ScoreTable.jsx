@@ -13,8 +13,6 @@ import defaultProfile from '../../images/default-pp.jpg';
 const ScoreTable = ({ results }) => {
   const [predictionsToShow, setPredictionsToShow] = useState([]);
 
-  console.log(results);
-
   if (results.length <= 0) return null;
 
   return (

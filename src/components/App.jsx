@@ -24,8 +24,9 @@ const App = () => {
 
   // TODO: Replace with environment var when eslint configured
   const hasSeasonStarted = new Date() >= new Date('2025-08-15');
-
-  console.log(predictions);
+  const hasAllPredictionsBeenSubmitted = predictions.every(
+    (user) => user.prediction,
+  );
 
   // Add back in once removed mocks
   // const getStandings = async () => {
@@ -60,8 +61,6 @@ const App = () => {
     usersWithPredictions.forEach((user) => {
       let score = 0;
 
-      console.log(user.prediction);
-
       JSON.parse(user.prediction).forEach((prediction, predictionIndex) => {
         const predictedPos = predictionIndex + 1;
 
@@ -93,17 +92,14 @@ const App = () => {
     return totalGoals;
   };
 
-  const createPrediction = async ({ expectedGoals }) => {
-    console.log(expectedGoals);
-    const { data, errors } = await client.models.Predictions.update({
+  const createPrediction = async (expectedGoals) => {
+    await client.models.Predictions.update({
       id: predictions.find((user) => user.user === selectedUser)?.id,
       prediction: JSON.stringify(
         currentPrediction.map((prediction) => prediction.team.name),
       ),
       expectedGoals,
     });
-
-    console.log(data, errors);
   };
 
   useEffect(() => {
@@ -142,7 +138,7 @@ const App = () => {
       )}
 
       {/* Replace to check if season started or all users have submitted */}
-      {predictions.some((user) => user.prediction) && (
+      {hasAllPredictionsBeenSubmitted && (
         <>
           {/* <Button
             variant='contained'
@@ -163,7 +159,8 @@ const App = () => {
           currentPrediction={currentPrediction}
           setCurrentPrediction={setCurrentPrediction}
           createPrediction={(expectedGoals) => {
-            createPrediction({ expectedGoals });
+            createPrediction(expectedGoals);
+            setSelectedUser(null);
           }}
         />
       )}

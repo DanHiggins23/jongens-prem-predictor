@@ -54,7 +54,14 @@ const PredictionsTable = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setShowxGDialog(false)}>Cancel</Button>
+        <Button
+          onClick={() => {
+            setShowxGDialog(false);
+            setExpectedGoalsInput('');
+          }}
+        >
+          Cancel
+        </Button>
         <Button
           variant='contained'
           sx={{ backgroundColor: '#F2055C', margin: '20px' }}
@@ -85,7 +92,7 @@ const PredictionsTable = ({
           variant='contained'
           sx={{ backgroundColor: '#F2055C', margin: '20px' }}
           onClick={() => {
-            createPrediction({ expectedGoals: expectedGoalsInput });
+            createPrediction(expectedGoalsInput);
             setShowSubmissionDialog(false);
           }}
           autoFocus
@@ -144,7 +151,7 @@ const PredictionsTable = ({
               padding: '10px',
             }}
           >
-            <Table>
+            <Table sx={{ touchAction: 'none' }}>
               <TableHead>
                 <TableRow>
                   <TableCell
@@ -171,6 +178,7 @@ const PredictionsTable = ({
                     width: '90%',
                     borderBottom: '1px solid rgba(224, 224, 224, 1)',
                     borderTop: '1px solid rgba(224, 224, 224, 1)',
+                    touchAction: 'manipulation',
                   }}
                 >
                   {currentDraggedItem && (
@@ -218,7 +226,7 @@ const PredictionsTable = ({
                           />
                           {currentDraggedItem?.name}
                         </span>
-                        <IconButton onClick={() => console.log('hitting')}>
+                        <IconButton>
                           <DragIndicatorIcon />
                         </IconButton>
                       </span>

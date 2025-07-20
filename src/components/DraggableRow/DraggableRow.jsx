@@ -61,7 +61,12 @@ const DraggableRow = ({ team, position }) => {
             {team.team.name}
           </span>
           <span>
-            <IconButton>
+            <IconButton
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...listeners}
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...attributes}
+            >
               <DragIndicatorIcon />
             </IconButton>
           </span>
