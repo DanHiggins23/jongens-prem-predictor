@@ -1,0 +1,35 @@
+{
+  "extends": ["airbnb"],
+  "rules": {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "arrow-parens": ["warn", "as-needed"],
+    "linebreak-style": "off",
+    "react/destructuring-assignment": "off",
+    "react/no-unused-prop-types": "off",
+    "jsx-quotes": "off",
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "no-shadow": "warn",
+    "react/forbid-prop-types": "warn",
+    "operator-linebreak": "off",
+    "react/jsx-filename-extension": [
+      2,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ]
+  },
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "project": "./tsconfig.json"
+  }
+}

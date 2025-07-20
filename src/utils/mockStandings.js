@@ -1,9 +1,9 @@
 export default [
   {
     team: {
-      name: "Liverpool",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/364.png",
-      abbreviation: "LIV",
+      name: 'Liverpool',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png',
+      abbreviation: 'LIV',
     },
     stats: {
       wins: 25,
@@ -19,9 +19,9 @@ export default [
   },
   {
     team: {
-      name: "Arsenal",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/359.png",
-      abbreviation: "ARS",
+      name: 'Arsenal',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png',
+      abbreviation: 'ARS',
     },
     stats: {
       wins: 20,
@@ -37,9 +37,9 @@ export default [
   },
   {
     team: {
-      name: "Manchester City",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/382.png",
-      abbreviation: "MNC",
+      name: 'Manchester City',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png',
+      abbreviation: 'MNC',
     },
     stats: {
       wins: 21,
@@ -55,9 +55,9 @@ export default [
   },
   {
     team: {
-      name: "Chelsea",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/363.png",
-      abbreviation: "CHE",
+      name: 'Chelsea',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/363.png',
+      abbreviation: 'CHE',
     },
     stats: {
       wins: 20,
@@ -73,9 +73,9 @@ export default [
   },
   {
     team: {
-      name: "Newcastle United",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/361.png",
-      abbreviation: "NEW",
+      name: 'Newcastle United',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/361.png',
+      abbreviation: 'NEW',
     },
     stats: {
       wins: 20,
@@ -91,9 +91,9 @@ export default [
   },
   {
     team: {
-      name: "Aston Villa",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/362.png",
-      abbreviation: "AVL",
+      name: 'Aston Villa',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/362.png',
+      abbreviation: 'AVL',
     },
     stats: {
       wins: 19,
@@ -109,9 +109,9 @@ export default [
   },
   {
     team: {
-      name: "Nottingham Forest",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/393.png",
-      abbreviation: "NFO",
+      name: 'Nottingham Forest',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/393.png',
+      abbreviation: 'NFO',
     },
     stats: {
       wins: 19,
@@ -127,9 +127,9 @@ export default [
   },
   {
     team: {
-      name: "Brighton & Hove Albion",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/331.png",
-      abbreviation: "BHA",
+      name: 'Brighton & Hove Albion',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/331.png',
+      abbreviation: 'BHA',
     },
     stats: {
       wins: 16,
@@ -145,9 +145,9 @@ export default [
   },
   {
     team: {
-      name: "AFC Bournemouth",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/349.png",
-      abbreviation: "BOU",
+      name: 'AFC Bournemouth',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/349.png',
+      abbreviation: 'BOU',
     },
     stats: {
       wins: 15,
@@ -163,9 +163,9 @@ export default [
   },
   {
     team: {
-      name: "Brentford",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/337.png",
-      abbreviation: "BRE",
+      name: 'Brentford',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/337.png',
+      abbreviation: 'BRE',
     },
     stats: {
       wins: 16,
@@ -181,9 +181,9 @@ export default [
   },
   {
     team: {
-      name: "Fulham",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/370.png",
-      abbreviation: "FUL",
+      name: 'Fulham',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/370.png',
+      abbreviation: 'FUL',
     },
     stats: {
       wins: 15,
@@ -199,9 +199,9 @@ export default [
   },
   {
     team: {
-      name: "Crystal Palace",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/384.png",
-      abbreviation: "CRY",
+      name: 'Crystal Palace',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/384.png',
+      abbreviation: 'CRY',
     },
     stats: {
       wins: 13,
@@ -217,9 +217,9 @@ export default [
   },
   {
     team: {
-      name: "Everton",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/368.png",
-      abbreviation: "EVE",
+      name: 'Everton',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/368.png',
+      abbreviation: 'EVE',
     },
     stats: {
       wins: 11,
@@ -235,9 +235,9 @@ export default [
   },
   {
     team: {
-      name: "West Ham United",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/371.png",
-      abbreviation: "WHU",
+      name: 'West Ham United',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/371.png',
+      abbreviation: 'WHU',
     },
     stats: {
       wins: 11,
@@ -253,9 +253,9 @@ export default [
   },
   {
     team: {
-      name: "Manchester United",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/360.png",
-      abbreviation: "MAN",
+      name: 'Manchester United',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/360.png',
+      abbreviation: 'MAN',
     },
     stats: {
       wins: 11,
@@ -271,9 +271,9 @@ export default [
   },
   {
     team: {
-      name: "Wolverhampton Wanderers",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/380.png",
-      abbreviation: "WOL",
+      name: 'Wolverhampton Wanderers',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/380.png',
+      abbreviation: 'WOL',
     },
     stats: {
       wins: 12,
@@ -289,9 +289,9 @@ export default [
   },
   {
     team: {
-      name: "Tottenham Hotspur",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/367.png",
-      abbreviation: "TOT",
+      name: 'Tottenham Hotspur',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/367.png',
+      abbreviation: 'TOT',
     },
     stats: {
       wins: 11,
@@ -307,9 +307,9 @@ export default [
   },
   {
     team: {
-      name: "Leicester City",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/375.png",
-      abbreviation: "LEI",
+      name: 'Leicester City',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/375.png',
+      abbreviation: 'LEI',
     },
     stats: {
       wins: 6,
@@ -325,9 +325,9 @@ export default [
   },
   {
     team: {
-      name: "Ipswich Town",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/373.png",
-      abbreviation: "IPS",
+      name: 'Ipswich Town',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/373.png',
+      abbreviation: 'IPS',
     },
     stats: {
       wins: 4,
@@ -343,9 +343,9 @@ export default [
   },
   {
     team: {
-      name: "Southampton",
-      logo: "https://a.espncdn.com/i/teamlogos/soccer/500/376.png",
-      abbreviation: "SOU",
+      name: 'Southampton',
+      logo: 'https://a.espncdn.com/i/teamlogos/soccer/500/376.png',
+      abbreviation: 'SOU',
     },
     stats: {
       wins: 2,

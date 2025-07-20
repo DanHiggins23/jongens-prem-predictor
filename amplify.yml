@@ -9,6 +9,7 @@ frontend:
   phases:
     build:
       commands:
+        - echo "SEASON_START_DATE=$SEASON_START_DATE" >> .env
         - npm run build
   artifacts:
     baseDirectory: build
