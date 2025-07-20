@@ -59,12 +59,11 @@ const PredictionsTable = ({
           variant='contained'
           sx={{ backgroundColor: '#F2055C', margin: '20px' }}
           onClick={() => {
-            createPrediction({ expectedGoals: expectedGoalsInput });
             setShowSubmissionDialog(true);
             setShowxGDialog(false);
           }}
           autoFocus
-          // disabled={expectedGoals}
+          disabled={expectedGoalsInput === ''}
         >
           Next
         </Button>
@@ -86,7 +85,7 @@ const PredictionsTable = ({
           variant='contained'
           sx={{ backgroundColor: '#F2055C', margin: '20px' }}
           onClick={() => {
-            createPrediction();
+            createPrediction({ expectedGoals: expectedGoalsInput });
             setShowSubmissionDialog(false);
           }}
           autoFocus

@@ -93,14 +93,17 @@ const App = () => {
     return totalGoals;
   };
 
-  const createPrediction = ({ expectedGoals }) => {
-    client.models.Predictions.create({
-      user: selectedUser,
+  const createPrediction = async ({ expectedGoals }) => {
+    console.log(expectedGoals);
+    const { data, errors } = await client.models.Predictions.update({
+      id: predictions.find((user) => user.user === selectedUser)?.id,
       prediction: JSON.stringify(
         currentPrediction.map((prediction) => prediction.team.name),
       ),
       expectedGoals,
     });
+
+    console.log(data, errors);
   };
 
   useEffect(() => {

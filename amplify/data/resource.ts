@@ -5,7 +5,7 @@ const schema = a.schema({
     .model({
       user: a.string(),
       prediction: a.string(),
-      expectedGoals: a.integer(),
+      expectedGoals: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });

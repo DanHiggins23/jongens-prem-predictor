@@ -114,7 +114,7 @@ const ScoreTable = ({ results }) => {
                     {result.score}
                   </TableCell>
                   <TableCell align='center' sx={{ color: '#340040' }}>
-                    {result.goals.toLocaleString()}
+                    {result.goals?.toLocaleString()}
                   </TableCell>
                   {/* <TableCell align="center" sx={{ color: "#340040" }}>
                   <Button
