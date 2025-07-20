@@ -55,8 +55,9 @@ const App = () => {
 
   const calculateScores = () => {
     const scores = [];
+    const usersWithPredictions = predictions.filter((user) => user.prediction);
 
-    predictions.forEach((user) => {
+    usersWithPredictions.forEach((user) => {
       let score = 0;
 
       console.log(user.prediction);
@@ -158,7 +159,9 @@ const App = () => {
         <PredictionsTable
           currentPrediction={currentPrediction}
           setCurrentPrediction={setCurrentPrediction}
-          createPrediction={createPrediction}
+          createPrediction={(expectedGoals) => {
+            createPrediction({ expectedGoals });
+          }}
         />
       )}
     </div>
