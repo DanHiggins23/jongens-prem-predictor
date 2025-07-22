@@ -145,7 +145,7 @@ const PredictionsTable = ({
           <TableContainer
             component={Paper}
             sx={{
-              width: '90%',
+              width: '80%',
               margin: 'auto',
               borderRadius: '20px',
               padding: '10px',
@@ -242,9 +242,9 @@ const PredictionsTable = ({
       <Button
         variant='contained'
         onClick={() => setShowxGDialog(true)}
-        sx={{ backgroundColor: '#F2055C', margin: '20px' }}
+        sx={{ backgroundColor: '#F2055C', margin: '20px', width: '50%' }}
       >
-        Submit prediction
+        Submit predictions
       </Button>
 
       <Dialog

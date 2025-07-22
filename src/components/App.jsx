@@ -13,11 +13,18 @@ import mapUserToProfile from '../utils/mapUserToProfile';
 const client = generateClient();
 
 const App = () => {
+  const defaultPredictionState = [...mockStandings].sort(
+    (a, b) =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      a.team.name.localeCompare(b.team.name),
+    // eslint-disable-next-line function-paren-newline
+  );
+
   const [standings, setStandings] = useState(mockStandings);
   const [totalGoals, setTotalGoals] = useState(null);
   const [sortedResults, setSortedResults] = useState([]);
   const [currentPrediction, setCurrentPrediction] = useState(
-    [...mockStandings].sort((a, b) => a.team.name.localeCompare(b.team.name)),
+    defaultPredictionState,
   );
   const [predictions, setPredictions] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -31,7 +38,8 @@ const App = () => {
   // Add back in once removed mocks
   // const getStandings = async () => {
   //   const response = await axios.get(
-  //     "https://premier-league-standings1.p.rapidapi.com/?season=2024",
+  // TODO: Update season to be environment variable
+  //     "https://premier-league-standings1.p.rapidapi.com/?season=2025",
   //     {
   //       headers: {
   //         "X-RapidAPI-Key":
@@ -107,6 +115,10 @@ const App = () => {
       next: (data) => setPredictions([...data.items]),
     });
   }, []);
+
+  useEffect(() => {
+    setCurrentPrediction(defaultPredictionState);
+  }, [selectedUser]);
 
   useEffect(() => {
     if (standings.length > 0) {

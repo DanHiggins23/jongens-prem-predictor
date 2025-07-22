@@ -27,7 +27,7 @@ const LeagueTable = ({ leagueTable }) => {
         <TableContainer
           component={Paper}
           sx={{
-            width: '90%',
+            width: '80%',
             margin: 'auto',
             borderRadius: '20px',
             padding: '10px',

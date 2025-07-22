@@ -66,6 +66,5 @@
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vite": "^7.0.4"
-  },
-  "homepage": "http://DanHiggins23.github.io/jongens-prem-predictor"
+  }
 }
