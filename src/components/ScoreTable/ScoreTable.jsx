@@ -7,10 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 
 import defaultProfile from '../../images/default-pp.jpg';
 
-const ScoreTable = ({ results }) => {
+const ScoreTable = ({ results, users }) => {
   const [predictionsToShow, setPredictionsToShow] = useState([]);
 
   if (results.length <= 0) return null;
@@ -78,6 +79,12 @@ const ScoreTable = ({ results }) => {
               >
                 xG
               </TableCell>
+              <TableCell
+                align='center'
+                sx={{ color: '#340040', fontWeight: 'bold' }}
+              >
+                Predictions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -114,52 +121,54 @@ const ScoreTable = ({ results }) => {
                   <TableCell align='center' sx={{ color: '#340040' }}>
                     {result.goals?.toLocaleString()}
                   </TableCell>
-                  {/* <TableCell align="center" sx={{ color: "#340040" }}>
-                  <Button
-                    onClick={() =>
-                      predictionsToShow.find(
-                        (prediction) => prediction.name === result.name
-                      )
-                        ? setPredictionsToShow(
-                            predictionsToShow.filter(
-                              (prediction) =>
-                                prediction.name !== result.name
-                            )
+                  <TableCell align='center' sx={{ color: '#340040' }}>
+                    <Button
+                      onClick={() => {
+                        if (
+                          predictionsToShow.find(
+                            (prediction) => prediction.user === result.name,
                           )
-                        : setPredictionsToShow([
-                            ...predictionsToShow,
-                            users.find(
-                              (user) => user.name === result.name
+                        ) {
+                          return setPredictionsToShow(
+                            predictionsToShow.filter(
+                              (prediction) => prediction.user !== result.name,
                             ),
-                          ])
-                    }
-                  >
-                    {predictionsToShow.find(
-                      (prediction) => prediction.name === result.name
-                    )
-                      ? "Hide"
-                      : "View"}
-                  </Button>
-                </TableCell> */}
+                          );
+                        }
+                        return setPredictionsToShow([
+                          ...predictionsToShow,
+                          users.find((user) => user.user === result.name),
+                        ]);
+                      }}
+                    >
+                      {predictionsToShow.find(
+                        (prediction) => prediction.user === result.name,
+                      )
+                        ? 'Hide'
+                        : 'View'}
+                    </Button>
+                  </TableCell>
                 </TableRow>
 
-                {/* {predictionsToShow.length > 0 &&
+                {predictionsToShow.length > 0 &&
                   predictionsToShow.find(
-                    (prediction) => prediction.name === result.name,
+                    (prediction) => prediction.user === result.name,
                   ) &&
-                  predictionsToShow
-                    .find((prediction) => prediction.name === result.name)
-                    .predictions.map((prediction, index) => (
-                      <TableRow>
-                        <TableCell
-                          align='center'
-                          sx={{ color: '#340040', fontWeight: 'bold' }}
-                          colSpan={5}
-                        >
-                          {`${index + 1}: ${prediction}`}
-                        </TableCell>
-                      </TableRow>
-                    ))} */}
+                  JSON.parse(
+                    predictionsToShow.find(
+                      (prediction) => prediction.user === result.name,
+                    ).prediction,
+                  ).map((prediction, index) => (
+                    <TableRow>
+                      <TableCell
+                        align='center'
+                        sx={{ color: '#340040', fontWeight: 'bold' }}
+                        colSpan={5}
+                      >
+                        {`${index + 1}: ${prediction}`}
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </>
             ))}
           </TableBody>

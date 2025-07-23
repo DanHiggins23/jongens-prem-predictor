@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import axios from 'axios';
+import Button from '@mui/material/Button';
 
 import mockStandings from '../utils/mockStandings';
 import './App.scss';
@@ -20,7 +21,7 @@ const App = () => {
     // eslint-disable-next-line function-paren-newline
   );
 
-  const [standings, setStandings] = useState(mockStandings);
+  const [standings, setStandings] = useState([]);
   const [totalGoals, setTotalGoals] = useState(null);
   const [sortedResults, setSortedResults] = useState([]);
   const [currentPrediction, setCurrentPrediction] = useState(
@@ -35,32 +36,31 @@ const App = () => {
     (user) => user.prediction,
   );
 
-  // Add back in once removed mocks
-  // const getStandings = async () => {
-  //   const response = await axios.get(
-  // TODO: Update season to be environment variable
-  //     "https://premier-league-standings1.p.rapidapi.com/?season=2025",
-  //     {
-  //       headers: {
-  //         "X-RapidAPI-Key":
-  //           "5d4abb2db7msh48ef7358e10d30fp15bcb3jsn00bc1450501f",
-  //         "X-RapidAPI-Host": "premier-league-standings1.p.rapidapi.com",
-  //       },
-  //     }
-  //   );
-  //   return response.data;
-  // };
+  const getStandings = async () => {
+    const response = await axios.get(
+      // TODO: Update season to be environment variable
+      'https://premier-league-standings1.p.rapidapi.com/?season=2025',
+      {
+        headers: {
+          'X-RapidAPI-Key':
+            '5d4abb2db7msh48ef7358e10d30fp15bcb3jsn00bc1450501f',
+          'X-RapidAPI-Host': 'premier-league-standings1.p.rapidapi.com',
+        },
+      },
+    );
+    return response.data;
+  };
 
-  // const requestStandings = () => {
-  //   getStandings()
-  //     .then((response) => {
-  //       setStandings(response);
-  //       setCurrentPrediction(
-  //         response.sort((a, b) => a.team.name.localeCompare(b.team.name))
-  //       );
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
+  const requestStandings = () => {
+    getStandings()
+      .then((response) => {
+        setStandings(response);
+        setCurrentPrediction(
+          [...response].sort((a, b) => a.team.name.localeCompare(b.team.name)),
+        );
+      })
+      .catch((error) => console.log(error));
+  };
 
   const calculateScores = () => {
     const scores = [];
@@ -152,15 +152,15 @@ const App = () => {
       {/* Replace to check if season started or all users have submitted */}
       {hasAllPredictionsBeenSubmitted && (
         <>
-          {/* <Button
+          <Button
             variant='contained'
             onClick={() => requestStandings()}
             sx={{ backgroundColor: '#F2055C', marginBottom: '20px' }}
           >
-            {standings.length > 0 ? 'Update score' : 'Calculate score'}
-          </Button> */}
+            {standings.length > 0 ? 'Update score' : 'Calculate scores'}
+          </Button>
 
-          <ScoreTable results={sortedResults} />
+          <ScoreTable results={sortedResults} users={predictions} />
 
           <LeagueTable leagueTable={standings} />
         </>
