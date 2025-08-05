@@ -23,6 +23,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import Chip from '@mui/material/Chip';
 
 import DraggableRow from '../DraggableRow/DraggableRow';
 
@@ -30,6 +31,7 @@ const PredictionsTable = ({
   currentPrediction,
   setCurrentPrediction,
   createPrediction,
+  isDraft,
 }) => {
   const [currentDraggedItem, setCurrentDraggedItem] = useState(null);
   const [showxGDialog, setShowxGDialog] = useState(false);
@@ -92,7 +94,7 @@ const PredictionsTable = ({
           variant='contained'
           sx={{ backgroundColor: '#F2055C', margin: '20px' }}
           onClick={() => {
-            createPrediction(expectedGoalsInput);
+            createPrediction(expectedGoalsInput, false);
             setShowSubmissionDialog(false);
           }}
           autoFocus
@@ -106,6 +108,9 @@ const PredictionsTable = ({
   return (
     <>
       <h2>Set your predictions below 👇</h2>
+      {isDraft && (
+        <Chip label='In Draft' color='warning' sx={{ marginBottom: '20px' }} />
+      )}
 
       <DndContext
         onDragStart={(event) => {
@@ -239,13 +244,28 @@ const PredictionsTable = ({
         </SortableContext>
       </DndContext>
 
-      <Button
-        variant='contained'
-        onClick={() => setShowxGDialog(true)}
-        sx={{ backgroundColor: '#F2055C', margin: '20px', width: '50%' }}
-      >
-        Submit predictions
-      </Button>
+      <div>
+        <Button
+          variant='outlined'
+          color='secondary'
+          onClick={() => createPrediction(null, true)}
+          sx={{
+            margin: '20px 20px 0px',
+            width: '50%',
+            color: 'white',
+            borderColor: '#F2055C',
+          }}
+        >
+          Save draft
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() => setShowxGDialog(true)}
+          sx={{ backgroundColor: '#F2055C', margin: '20px', width: '50%' }}
+        >
+          Submit predictions
+        </Button>
+      </div>
 
       <Dialog
         open={showxGDialog || showSubmissionDialog}

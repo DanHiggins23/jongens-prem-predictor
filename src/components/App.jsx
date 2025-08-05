@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import axios from 'axios';
+
 import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import mockStandings from '../utils/mockStandings';
 import './App.scss';
@@ -29,11 +32,13 @@ const App = () => {
   );
   const [predictions, setPredictions] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [isToastOpen, setIsToastOpen] = useState(false);
 
   // TODO: Replace with environment var when eslint configured
   const hasSeasonStarted = new Date() >= new Date('2025-08-15');
   const hasAllPredictionsBeenSubmitted = predictions.every(
-    (user) => user.prediction,
+    (user) => !user.isDraft,
   );
 
   const getStandings = async () => {
@@ -100,12 +105,13 @@ const App = () => {
     return totalGoals;
   };
 
-  const createPrediction = async (expectedGoals) => {
+  const createPrediction = async (expectedGoals, isDraft) => {
     await client.models.Predictions.update({
       id: predictions.find((user) => user.user === selectedUser)?.id,
       prediction: JSON.stringify(
         currentPrediction.map((prediction) => prediction.team.name),
       ),
+      isDraft,
       expectedGoals,
     });
   };
@@ -168,14 +174,54 @@ const App = () => {
 
       {!hasSeasonStarted && selectedUser && (
         <PredictionsTable
-          currentPrediction={currentPrediction}
+          currentPrediction={
+            predictions.find((prediction) => prediction.user === selectedUser)
+              ?.isDraft
+              ? JSON.parse(
+                  predictions.find(
+                    (prediction) => prediction.user === selectedUser,
+                  )?.prediction,
+                )
+              : currentPrediction
+          }
           setCurrentPrediction={setCurrentPrediction}
-          createPrediction={(expectedGoals) => {
-            createPrediction(expectedGoals);
+          createPrediction={(expectedGoals, isDraft) => {
+            createPrediction(expectedGoals, isDraft);
             setSelectedUser(null);
+            setToastMessage(
+              isDraft
+                ? 'Draft predictions saved successfully'
+                : 'Predictions submitted successfully',
+            );
           }}
+          isDraft={
+            predictions.find((prediction) => prediction.user === selectedUser)
+              ?.isDraft
+          }
         />
       )}
+
+      <Snackbar
+        open={isToastOpen}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        onClose={() => {
+          setIsToastOpen(false);
+          setToastMessage(null);
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setIsToastOpen(false);
+            setToastMessage(null);
+          }}
+          severity='success'
+          variant='filled'
+          sx={{ width: '100%' }}
+        >
+          {toastMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

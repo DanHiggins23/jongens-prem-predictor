@@ -13,6 +13,7 @@
     "no-shadow": "warn",
     "react/forbid-prop-types": "warn",
     "operator-linebreak": "off",
+    "indent": "warn",
     "react/jsx-filename-extension": [
       2,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
