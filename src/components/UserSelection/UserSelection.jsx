@@ -7,7 +7,7 @@ import mapUserToProfile from '../../utils/mapUserToProfile';
 const UserSelection = ({ users, selectedUser, setSelectedUser }) => {
   const usersToDisplay = selectedUser
     ? [{ user: selectedUser, prediction: null }]
-    : users.filter((user) => !user.isDraft);
+    : users.filter((user) => !user.prediction);
 
   if (users.length === 0) {
     return null;

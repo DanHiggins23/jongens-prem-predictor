@@ -180,7 +180,7 @@ const PredictionsTable = ({
                 <DragOverlay
                   style={{
                     background: 'white',
-                    width: '90%',
+                    width: '80%',
                     borderBottom: '1px solid rgba(224, 224, 224, 1)',
                     borderTop: '1px solid rgba(224, 224, 224, 1)',
                     touchAction: 'manipulation',
@@ -245,7 +245,7 @@ const PredictionsTable = ({
       </DndContext>
 
       <div>
-        <Button
+        {/* <Button
           variant='outlined'
           color='secondary'
           onClick={() => createPrediction(null, true)}
@@ -257,7 +257,7 @@ const PredictionsTable = ({
           }}
         >
           Save draft
-        </Button>
+        </Button> */}
         <Button
           variant='contained'
           onClick={() => setShowxGDialog(true)}

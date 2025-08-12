@@ -38,7 +38,7 @@ const App = () => {
   // TODO: Replace with environment var when eslint configured
   const hasSeasonStarted = new Date() >= new Date('2025-08-15');
   const hasAllPredictionsBeenSubmitted = predictions.every(
-    (user) => !user.isDraft,
+    (user) => user.prediction,
   );
 
   const getStandings = async () => {
@@ -174,7 +174,8 @@ const App = () => {
 
       {!hasSeasonStarted && selectedUser && (
         <PredictionsTable
-          currentPrediction={
+          currentPrediction={currentPrediction}
+          draftPredictions={
             predictions.find((prediction) => prediction.user === selectedUser)
               ?.isDraft
               ? JSON.parse(
@@ -182,7 +183,7 @@ const App = () => {
                     (prediction) => prediction.user === selectedUser,
                   )?.prediction,
                 )
-              : currentPrediction
+              : null
           }
           setCurrentPrediction={setCurrentPrediction}
           createPrediction={(expectedGoals, isDraft) => {
@@ -192,6 +193,7 @@ const App = () => {
               isDraft
                 ? 'Draft predictions saved successfully'
                 : 'Predictions submitted successfully',
+              setIsToastOpen(true),
             );
           }}
           isDraft={
