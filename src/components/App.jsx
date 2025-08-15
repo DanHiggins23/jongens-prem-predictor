@@ -36,7 +36,7 @@ const App = () => {
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   // TODO: Replace with environment var when eslint configured
-  const hasSeasonStarted = new Date() >= new Date('2025-08-15');
+  const hasSeasonStarted = new Date() >= new Date('2025-08-16');
   const hasAllPredictionsBeenSubmitted = predictions.every(
     (user) => user.prediction,
   );
