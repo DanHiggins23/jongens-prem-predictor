@@ -172,7 +172,7 @@ const App = () => {
         </>
       )}
 
-      {!hasSeasonStarted && selectedUser && (
+      {selectedUser && (
         <PredictionsTable
           currentPrediction={currentPrediction}
           draftPredictions={
