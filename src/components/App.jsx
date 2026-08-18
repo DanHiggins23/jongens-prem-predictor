@@ -44,7 +44,7 @@ const App = () => {
   const getStandings = async () => {
     const response = await axios.get(
       // TODO: Update season to be environment variable
-      'https://premier-league-standings1.p.rapidapi.com/?season=2025',
+      'https://premier-league-standings1.p.rapidapi.com/?season=2026',
       {
         headers: {
           'X-RapidAPI-Key':
