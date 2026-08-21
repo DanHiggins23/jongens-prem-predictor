@@ -4,6 +4,7 @@ import shandogProfile from '../images/shandog-pp.jpg';
 import zachProfile from '../images/zach-pp.jpg';
 import dcProfile from '../images/dc-pp.jpg';
 import imranProfile from '../images/imran-pp.png';
+import millyProfile from '../images/milly-pp.png';
 
 export default {
   Higgo: meProfile,
@@ -11,5 +12,5 @@ export default {
   Shandog: shandogProfile,
   Zachamo: zachProfile,
   DC: dcProfile,
-  Imran: imranProfile,
+  Milly: millyProfile,
 };
