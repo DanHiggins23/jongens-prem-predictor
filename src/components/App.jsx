@@ -52,7 +52,6 @@ const App = () => {
         },
       },
     );
-    console.log(response);
     return response.data;
   };
 
@@ -65,7 +64,7 @@ const App = () => {
           [...formattedResponse].sort(
             (a, b) =>
               // eslint-disable-next-line implicit-arrow-linebreak
-              a.team.team.name.localeCompare(b.team.team.name),
+              a.team.name.localeCompare(b.team.name),
             // eslint-disable-next-line function-paren-newline
           ),
         );
@@ -84,7 +83,7 @@ const App = () => {
         const predictedPos = predictionIndex + 1;
 
         const actualPos = standings.find(
-          (standing) => standing.team.team.name === prediction,
+          (standing) => standing.team.name === prediction,
         ).rank;
 
         score += Math.abs(actualPos - predictedPos);
