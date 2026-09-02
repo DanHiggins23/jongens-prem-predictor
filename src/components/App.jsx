@@ -43,25 +43,31 @@ const App = () => {
 
   const getStandings = async () => {
     const response = await axios.get(
-      // TODO: Update season to be environment variable
-      'https://premier-league-standings1.p.rapidapi.com/?season=2026',
+      'https://live-football-api1.p.rapidapi.com/league_standings?league_id=2kwbbcootiqqgmrzs6o5inle5',
       {
         headers: {
           'X-RapidAPI-Key':
             '5d4abb2db7msh48ef7358e10d30fp15bcb3jsn00bc1450501f',
-          'X-RapidAPI-Host': 'premier-league-standings1.p.rapidapi.com',
+          'X-RapidAPI-Host': 'live-football-api1.p.rapidapi.com',
         },
       },
     );
+    console.log(response);
     return response.data;
   };
 
   const requestStandings = () => {
     getStandings()
       .then((response) => {
-        setStandings(response);
+        const formattedResponse = response.data.standings[0].table;
+        setStandings(formattedResponse);
         setCurrentPrediction(
-          [...response].sort((a, b) => a.team.name.localeCompare(b.team.name)),
+          [...formattedResponse].sort(
+            (a, b) =>
+              // eslint-disable-next-line implicit-arrow-linebreak
+              a.team.team.name.localeCompare(b.team.team.name),
+            // eslint-disable-next-line function-paren-newline
+          ),
         );
       })
       .catch((error) => console.log(error));
@@ -78,8 +84,8 @@ const App = () => {
         const predictedPos = predictionIndex + 1;
 
         const actualPos = standings.find(
-          (standing) => standing.team.name === prediction,
-        ).stats.rank;
+          (standing) => standing.team.team.name === prediction,
+        ).rank;
 
         score += Math.abs(actualPos - predictedPos);
       });
@@ -99,7 +105,7 @@ const App = () => {
     let totalGoals = 0;
 
     standings.forEach((team) => {
-      totalGoals += team.stats.goalsFor;
+      totalGoals += team.goals_for;
     });
 
     return totalGoals;

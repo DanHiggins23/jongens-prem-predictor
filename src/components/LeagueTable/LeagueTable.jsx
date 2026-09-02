@@ -75,7 +75,7 @@ const LeagueTable = ({ leagueTable }) => {
                     align='center'
                     sx={{ color: '#340040', fontWeight: 'bold' }}
                   >
-                    {team.stats.rank}
+                    {team.rank}
                   </TableCell>
                   <TableCell align='left' sx={{ color: '#340040' }}>
                     <div
@@ -94,13 +94,13 @@ const LeagueTable = ({ leagueTable }) => {
                     </div>
                   </TableCell>
                   <TableCell align='center' sx={{ color: '#340040' }}>
-                    {team.stats.gamesPlayed}
+                    {team.played}
                   </TableCell>
                   <TableCell align='center' sx={{ color: '#340040' }}>
-                    {team.stats.goalDifference}
+                    {team.goal_diff}
                   </TableCell>
                   <TableCell align='center' sx={{ color: '#340040' }}>
-                    {team.stats.points}
+                    {team.points}
                   </TableCell>
                 </TableRow>
               ))}
